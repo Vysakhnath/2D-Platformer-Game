@@ -52,10 +52,6 @@ public class GameInputController : MonoBehaviour
         moveInput = movementValue.Get<float>();
     }
 
-    private void Start()
-    {
-    }
-
     private void CancelSprint(InputAction.CallbackContext context)
     {
         isSprinting = false;
