@@ -1,12 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Player Config value")]
     [SerializeField]
     private float moveSpeed;
+    [SerializeField]
+    private float jumpForce;
+
+    [SerializeField]
+    private PlayerCollisionController collisionController;
 
     private Rigidbody2D player;
 
@@ -22,6 +29,16 @@ public class PlayerController : MonoBehaviour
         playerAnimator = GetComponent<Animator>();
         player = GetComponent<Rigidbody2D>();
         directionVector = Vector3.one;
+    }
+
+    private void OnJump(InputValue jumpValue)
+    {
+        Debug.Log("IsGrounded" + collisionController.isGrounded);
+        if (collisionController.isGrounded)
+        {
+            player.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            playerAnimator.SetTrigger("IsJumping");
+        }
     }
 
     private void FixedUpdate()
